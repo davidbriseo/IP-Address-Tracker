@@ -1,24 +1,37 @@
 import React from "react";
 
-function IpInfo(){
+function IpInfo(props){
+
     return(
         <div className="ipInfo"> 
             <div className="columns">
                 <div className="col">
-                    <div className="col-title">IP Adress</div>
-                    <div className="col-info">IP Adress Info</div>
+                    <h3 className="col-title">IP Adress</h3>
+                    <p className="col-info">{props.ipData.ip}</p>
                 </div>
                 <div className="col">
-                    <div className="col-title">Location</div>
-                    <div className="col-info">Location Info</div>
+                    <h3 className="col-title">Location</h3>
+                    <p className="col-info">
+                        {
+                            props.ipData.location?
+                                `${props.ipData.location.city} ${props.ipData.location.region} ${props.ipData.location.postalCode}`
+                                : "-"
+                        }
+                    </p>
                 </div>
                 <div className="col">
-                    <div className="col-title">Timezone</div>
-                    <div className="col-info">Timezone Info</div>
+                    <h3 className="col-title">Timezone</h3>
+                    <p className="col-info">
+                        {
+                            props.ipData.location?
+                                props.ipData.location.timezone
+                                : "-"
+                        }
+                    </p>
                 </div>
                 <div className="col">
-                    <div className="col-title">ISP</div>
-                    <div className="col-info">ISP Info</div>
+                    <h3 className="col-title">ISP</h3>
+                    <p className="col-info">{props.ipData.isp}</p>
                 </div>
             </div>
         </div>

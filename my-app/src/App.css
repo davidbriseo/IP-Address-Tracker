@@ -12,20 +12,35 @@
 .App {
   font-family: 'Rubik', sans-serif;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: plum;
+  display: grid;
+  grid-template-rows: repeat(12, 1fr);
 }
 
-.container{
-  margin: 0 auto;
-  text-align: center;
+.header, .ipInfo, .map {
+  grid-column: 1 / 2;
 }
 
 .header {
   background: #4743a0 url("./assets/pattern-bg.png");
   background-size: cover;
-  padding: 1em;
+  padding: 1em 0 4em;
+  min-height: 90px;
+  grid-row: 1 / 4;
+}
+
+.ipInfo{
+  grid-row: 2 / 9;
+  place-self: center;
+}
+
+.map{
+  grid-row: 4 / -1;
+  z-index: -1;
+}
+
+.container{
+  margin: 0 auto;
+  text-align: center;
 }
 
 .header h1{
@@ -37,27 +52,50 @@
 }
 
 .searchField{
-  margin: 1em 0 3em;
+  margin: .8em auto;
+  max-width: 200px;
+  display: flex;
+  justify-content: center;
+}
+
+.tooltip{
+  position: relative;
+}
+
+.tooltip-text{
+  display: block;
+  position: absolute;
+  color: orangered;
+  padding: 0;
+  margin: 0;
+  bottom: 100%;
+  left: 10%;
+  font-size: .7rem;
+  white-space: nowrap;
+  letter-spacing: .05rem;
+  font-weight: var(--fw-reg);
 }
 
 .searchField-input{
   border-radius: 1em 0 0 1em;
   border: none;
-  font-size: .8rem;
-  padding: 1em;
-  max-width: 370px;
+  margin: 0;
+  font-size: .7rem;
+  padding: .8em;
+  flex-grow: 1;
 }
 
 .searchField-btn{
   border-radius: 0 1em 1em 0;
   border: none;
-  padding: 1em;
+  font-size: .7rem;
+  padding: .8em;
   background-color: var(--clr-darker);
+  /* height: 30px; */
 }
 
 .searchField-btn i{
   color: #fefefe;
-  font-size: .8rem;
 }
 
 .searchField-btn:hover,
@@ -66,19 +104,14 @@
 }
 
 .ipInfo{
-  margin: -3.5em auto 1em;
-  padding: 1em 1.25em 1em;
+  margin: 0 auto;
+  padding: .2em .3em;
   border-radius: 1em;
   background: #fefefe;
 }
 
-.columns{
-  justify-content: center;
-}
-
 .col{
   border-bottom: 1.5px solid var(--clr-dark);
-  padding-bottom: .5em;
   margin-bottom: .5em;
   text-align: center;
 }
@@ -93,65 +126,80 @@
   color: var(--clr-dark);
   text-transform: uppercase;
   letter-spacing: .2em;
-  font-size: .5rem;
+  font-size: .4rem;
   font-weight: var(--fw-bold);
 }
 
 .col-info{
   color: var(--clr-darker);
+  font-size: .5rem;
+  letter-spacing: .1em;
   font-weight: var(--fw-bold);
   margin-top: .5em;
+  max-width: 150px;
+  margin-bottom: .6em;
 }
 
-.map{
-  background: plum;
+.leaflet-container{
   width: 100%;
   height: 100%;
-  margin-top: -4em;
-  z-index: -1;
 }
 
-@media (min-width: 375px) {
+/* ------------------------------------------------- */
+/* ------------------------------------------------- */
+
+@media (min-width: 375px){
+
+  .header{
+    grid-row: 1 / 4;
+  }
+
+  .ipInfo{
+    grid-row: 2 / 7;
+  }
+
+  .map{
+    grid-row: 4 / -1;
+  }
 
   .header h1{
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .searchField{
-    margin: 1.5em 0 5em;
+    margin: 1.2em auto;
+    max-width: 370px;
   }
 
   .searchField-input{
-    font-size: var(--fs-input);
-    width: 25em;
-  }
-
-  .searchField-btn{
-    font-size: var(--fs-input);
-    padding: 1em;
-  }
-
-  .searchField-btn i{
-    font-size: 1.5rem;
+    font-size: .8rem;
   }
   
-  .searchField,
+  .searchField-btn{
+    font-size: .8rem;
+  }
+
+  .tooltip-text{
+    left: 5%;
+  }
+
   .columns{
     display: flex;
     justify-content: center;
   }
 
   .ipInfo{
-    padding: 1.5em;
+    padding: .8em;
+    max-width: 500px;
   }
 
   .col{
     border-bottom: 0;
     padding-bottom: 0;
     margin-bottom: 0;
-    border-right: 1.5px solid var(--clr-dark);
-    margin-right: 1em;
-    padding-right: 1em;
+    border-right: 1px solid var(--clr-dark);
+    margin-right: .5em;
+    padding-right: .5em;
     text-align: left;
   }
 
@@ -161,13 +209,84 @@
   }
 
   .col-title{
-    font-size: .7rem;
+    font-size: .5rem;
     letter-spacing: .1em;
   }
-  
+
   .col-info{
+    font-size: .8rem;
     color: var(--clr-darker);
     font-weight: var(--fw-bold);
+    letter-spacing: 0;
     margin-top: .5em;
+    max-width: 100%;
   }
+
+}
+
+/* ------------------------------------------------- */
+/* ------------------------------------------------- */
+
+@media (min-width: 600px)  {
+
+  .header{
+    grid-row: 1 / 4;
+    min-height: 140px;
+  }
+
+  .ipInfo{
+    grid-row: 3 / 6;
+  }
+
+  .map{
+    grid-row: 4 / -1;
+  }
+
+  .header h1{
+    font-size: 2rem;
+  }
+
+  .searchField{
+    margin: 1.5em auto;
+    max-width: 600px;
+  }
+
+  .searchField-input{
+    font-size: var(--fs-input);
+  }
+
+  .searchField-btn{
+    font-size: var(--fs-input);
+  }
+
+  .searchField-btn i{
+    font-size: 1.5rem;
+  }
+
+  .tooltip-text{
+    left: 3%;
+    font-size: .8rem;
+  }
+
+  .ipInfo{
+    padding: 1.5em;
+    max-width: 800px;
+    max-height: 160px;
+  }
+
+  .col{
+    border-right: 1.5px solid var(--clr-dark);
+    margin-right: 1em;
+    padding-right: 1em;
+  }
+
+  .col-title{
+    font-size: .7rem;
+  }
+
+  .col-info{
+    font-size: var(--fs-input);
+    font-weight: var(--fw-bold);
+  }
+
 }
